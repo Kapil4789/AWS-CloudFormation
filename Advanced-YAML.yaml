@@ -1,0 +1,145 @@
+Documents:
+
+The above YAML snippet is called a document. A single YAML file can have more than one document. Each document can be interpreted as a separate YAML file which means multiple documents can contain the same or duplicate keys which are not allowed in the same document.
+
+The beginning of a document is denoted by three hyphens —.
+
+A YAML file with multiple documents would look like this, where each new document is indicated by ---.
+
+
+---
+#document 1
+codename: YAML
+name: YAML ain't markup language
+released: 2001
+
+---
+#document 2
+uses:
+  - configuration language
+  - data  persistence
+  - internet messaging
+  - cross language data sharing
+  
+---
+#document 3
+company: IDEXCEL
+domain:
+  - AWS services
+  - DevOps services
+  - AWS Migration
+turorial:
+  - name: yaml
+  - type: awesome
+  - rank: 1
+Author: Kapil Prajapati
+published: true
+
+
+Triple dots are used to end a YAML document without starting a new one ...
+
+Before we learn more about YAML, this is a good time to practice writing your own YAML file. They can be validated here.
+
+Now that we have seen an online YAML parser in action, it’s time we learn about schemas and tags.
+
+2. Schemas and Tags:
+
+Let’s take a moment to consider how YAML will interpret the given document. Is the sequence’s first literal a string or a boolean?
+
+literals:
+ - true
+ - random
+
+You are correct if you answer that the first item on the list is a boolean, and you are also correct if you answer that it is a string. The way it is resolved is determined by the YAML schema that the parser has implemented.
+
+
+
+YAML schemas:
+
+
+Schemas can be thought of as the way a parser resolves or understands nodes (values) present in a YAML file. There are primarily three default schemas in YAML:
+
+1. FailSafe Schema understands only maps, sequences, and strings and is guaranteed to work with any YAML file.
+
+2. JSON schema understands all types supported within JSON, including boolean, null, int, and float, as well as those in the FailSafe schema.
+
+3. Core schema is an extension of the JSON schema, making it more human-readable supporting the same types but in multiple forms.
+
+For example: 1. null | Null | NULL will all be resolved to the same type null, and true | True | TRUE will all be resolved to the same boolean value.
+
+Note: It is also possible to create your own custom schemas based on the above default schema.
+
+Coming back to the original question, if the parser supports only the basic schema (FailSafe Schema), the first item will be evaluated as a string. Otherwise, it will be evaluated as a boolean. Read more about YAML schemas here.
+
+YAML tags:
+
+What if we explicitly want a value to be parsed in a specific way?
+
+Let’s say from the same example that we want the first true value to be parsed as a string instead of a boolean, even when the parser uses the JSON or the core schema.
+
+This is where tags come into the picture. Tags can be thought of as types in YAML. 
+
+Even though we explicitly didn’t mention the tags/types in any of the YAML snippets we saw so far, they are inferred automatically by the YAML parser. For instance, the maps have the tag/type as tag:yaml.org,2002:map, sequences are tag:yaml.org,2002:seq and strings are tag:yaml.org,2002:str 
+
+
+tag:yaml.org,2002:map
+
+tag:yaml.org,2002:seq
+
+tag:yaml.org,2002:str
+
+The snippet below works perfectly fine, even when we specify the tags. It can be validated here.
+
+---
+# A sample yaml file
+company: !!str spacelift
+domain:
+ - !!str devops
+ - !!str devsecops
+tutorial:
+   - name: !!str yaml
+   - type: !!str awesome
+   - rank: !!int 1
+   - born: !!int 2001
+author: !!str omkarbirade
+published: !!bool true
+
+
+We can use these tags to explicitly specify a type. For our example, all we have to do is specify the type as a string, and the YAML parser will parse it as a string.
+
+scalars:
+ - !!str true
+ - random
+
+
+3. Anchors and alias:
+
+With a lot of configuration, configuration files can become quite large.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tags allow you to specify a specific type for a value. For example, the following YAML document specifies that the value of the key “name” is a string, while the value of the key “age” is an integer.
+
+name: Kapil
+
+
+
