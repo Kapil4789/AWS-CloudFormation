@@ -10,3 +10,4 @@ Resources:
       SecurityGroupIds: 
         - sg-07c81db300079ffc3
       SubnetId: subnet-038c7443c911ebdc1
+      
