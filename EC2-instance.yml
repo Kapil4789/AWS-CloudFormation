@@ -1,23 +1,12 @@
-AWSTemplateFormatVersion: "2010-09-09"
-Description: "This template creates for Ec2 instance"
+AWSTemplateFormatVersion: 2010-09-09
+Description: A Simple EC2 instance
 Resources:
   MyEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-         ImageId: ami-023508951a94f0c71
-         InstanceType: t3.micro
-         KeyName: Test-K
-         SecurityGroups:
-              - sg-07c81db300079ffc3
-         VPC: vpc-0b59960c2fc09f7cd
-         BlockDeviceMappings:
-              - DeviceName: /dev/sda1
-                Ebs:
-                     VolumeType: gp3
-                     Iops: 200
-                     DeleteOnTermination: false
-                     VolumeSize: 20
-  MyEIP:
-    Type: 'AWS::EC2::EIP'
-      Properties:
-           InstanceId: !Ref MyEC2Instance
+      ImageId: ami-0ae8f15ae66fe8cda
+      InstanceType: t3.small
+      KeyName: Demo-k
+      SecurityGroupIds: 
+        - sg-07c81db300079ffc3
+      SubnetId: subnet-038c7443c911ebdc1
