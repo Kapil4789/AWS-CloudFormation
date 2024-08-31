@@ -41,6 +41,7 @@ Parameters:
       - ec2-secret-execution-role
       - NDS-Cync-Dev-EC2-SSM-Role
       - ecrecsfullaccess
+      - EC2SSM-Role
 Resources:
   MyEC2Instance:
     Type: AWS::EC2::Instance
@@ -58,4 +59,4 @@ Resources:
             VolumeType: gp3
       Tags:
         - Key: Name
-          Value: MyEC2Instance  
+          Value: MyEC2Instance
