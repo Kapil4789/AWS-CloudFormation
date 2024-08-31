@@ -116,13 +116,154 @@ scalars:
 
 With a lot of configuration, configuration files can become quite large.
 
+Anchors (&) and aliases (*) are used to avoid duplication in YAML files. When writing large configurations in YAML, it is common for a specific configuration to be repeated. 
+
+For example, the vars config is repeated for all three services in the following YAML snippet.
+
+vars:
+  service1:
+    config:
+      env:  prod
+      retries:  3
+      version:  4.8
+  service2:
+    config:
+      env:  prod
+      retries:  3
+      version:  4.8
+  service3:
+    config:
+      env:  prod
+      retries:  3
+      version:  4.8
+
+As more and more things are repeated for large configuration files, this becomes tedious.
+
+Anchors and aliases allow us to rewrite the same snippet without repeating any configuration.
+
+Anchors (&) are used to define a chunk of configuration, and aliases refer to that chunk at a different part of the configuration.
+
+---
+vars:
+  service1:
+    config: &series_config
+      env:  prod
+      retries:  3
+      version:  4.8
+  service2:
+    config: &series_config
+  service3:
+    config: *series_config
+
+
+Anchors and aliases here helped us cut down the repeated configuration.
+
+
+But practically, configurations won’t be completely identical they would vary here and there. For instance, what if all the above services are running on different versions? Does this mean we have to rewrite and repeat the whole config?
+
+This is where overrides (<<:) come to the rescue. We can still use aliases and make the changes that we need.
+
+---
+vars:
+  service1: 
+    config: &series_config
+      env:  prod
+      retries:  3
+      version:  4.8
+  service2:
+    config: *series_config
+        <<: *series_config
+      version:  4.9
+  service3:
+    config: *series_config
+        <<: *series_config
+      version:  4.10
+
+
+YAML files treat : , { , } , [ , ] , , , & , * , # , ? , | , -- , < , > , = , ! , % , @ , \, etc, as special characters. 
+
+If special characters are a part of the data/value, they can be escaped using entities, Unicode, or quotes.
+
+Entity Escapes
+
+space: &#x20;
+colon: &#58;
+ampersand: &amp;
+
+Unicode Escapes
+
+space: "\u0020"
+single-quote: "\u0027"
+double quote: "\u0022"
+
+Quoted Escapes
+
+Double quote in a single quote: ‘YAML is the “best” configuration language’
+Single quote in a double quote: “ Yes, the ‘best’ “
+
+
+YAML vs JSON:
+
+How is YAML different from JSON? While both YAML and JSON are data serialization formats, YAML offers greater readability, support for complex data types, and the ability to include comments, making it more suitable for configuration files and human-readable data representation. JSON, on the other hand, is simpler and more widely used for data exchange in web applications and APIs due to its native support in JavaScript and smaller file size.
 
 
 
+Let’s see an example.
+
+The below code snippet of Kubernetes configuration is written in JSON. Don’t pay attention to what it does; just observe the file.
 
 
+Best practices for writing YAML files:
 
+YAML relies heavily on indentation, so if your indentation is not correct, the yaml file will be automatically invalid when you try to use it in your automations. Here are some of the best practices you can use when writing yaml files
 
+Use consistent indentation: – You should always use spaces and be consistent with the number of spaces you use throughout your file (usually, this should be two or four).
+
+Keep the files short: – You can configure everything in a single YAML file, but this will make everything hard to debug. You should always try to split your configurations into multiple files to speed up the debugging process.
+
+Use descriptive key names:  – To make your configuration smooth and easy to understand by other people, the key names used throughout the file should be meaningful.
+
+Structure complex data: – When you have complex data structures, you can use indentation to make it more readable.
+
+Use lists instead of maps: – Lists are denoted by a dash (“-”), while maps are key-value pairs.
+
+Use comments: – Comments will help you and others understand what that data is used for. To write a comment in a YAML file, you can prefix the line with the “#” character
+
+Use validations: – Validate your YAML files regularly using special tools for this purpose to catch syntax errors fast.
+
+Use quotes for strings: – This is especially useful if your string contains special characters or starts with a number
+
+Interesting facts about YAML:
+YAML works great as a configuration language, but it is important to be aware of certain challenges as well when using it.
+
+The curious case of the Norway problem:
+Imagine listing the abbreviation of all the countries where it snows.
+
+countries:
+- GB # Great britain
+- IE # Ireland
+- FR # France
+- DE # Denmark
+- NO # Norway
+
+All looks good, right? But when you try to read this YAML file in Python, we see NO being read as False instead of ‘NO’.
+
+>>> from pyyaml import load
+>>> load(the_configuration)
+{'countries': ['GB', 'IE', 'FR', 'DE', False]}
+
+So why does this happen?
+
+Remember the core schema which interprets NULL | null the same way? The same schema interprets FALSE | F | NO the same way. So, instead of parsing NO as a string, it parses it as a boolean. This can be easily solved by quoting NO.
+
+countries:
+- GB # Great Britain
+- IE # Ireland
+- FR # France
+- DE # Denmark
+- 'NO' # Norway
+
+However, to avoid such surprises, we can use StrictYAML, which parses everything as a string by default.
 
 
 
