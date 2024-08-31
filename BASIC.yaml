@@ -1,5 +1,4 @@
-# A YAML format primarily uses three node types:
-# 
+# A YAML format primarily uses three node types: 
 # 1. document
 # 2. scalar values
 # 3. sequence values
@@ -109,5 +108,163 @@ turorial:
   
 author: omkarbirade
 published: true
+
+
+1. Indentation
+A YAML file relies on whitespace and indentation to indicate nesting. Notice the hierarchy and nesting is visible through a Python-like indentation style. 
+It is critical to note that tab characters cannot be used for indentation in YAML files; 
+only spaces can be used. The number of spaces used for indentation doesn’t matter as long as they are consistent.
+
+tutorial:
+  - kapil:
+      name: "Hello Kapil Prajapati"
+      city: "Mehsana"
+      pincode: 384002
+  - vijay:
+      name: "Hello Vijay Prajapati"
+      city: "USA"
+      pincode: 123456
+  - omkar:
+      name: "Hello Omkar Prajapati"
+      city: "Mehsana"
+      pincode: 384002
+
+
+2. Mapping
+
+Mappings are used to associate key/value pairs that are unordered. Maps in YAML files can be nested by increasing the indentation, 
+or new maps can be created at the same level by resolving the previous one.
+
+
+name: "Kapil Prajapati"
+city: Mehsana
+pincode: 384002
+
+3. Sequences
+A sequence is an ordered list of nodes. In YAML, sequences can be nested by increasing the indentation, or new sequences can be created at the same level by resolving the previous one.
+
+- item1
+- item2
+- item3
+
+Sequences in YAML are represented by using the hyphen (-) and space. They are ordered and can be embedded inside a map using indentation.
+
+language:
+  - YAML
+  - php
+  - ruby
+  - perl
+  - python
+  - java
+  - c++
+
+Tip: Remember that the order matters with sequences but not with mappings.
+
+4. Literals-Strings
+
+String literals in YAML do not need to be quoted. It is only important to quote them when they contain a value that can be mistaken for a special character.
+
+Here is an example where the string has to be quoted as & is a special character.
+
+message1: YAML & JSON
+message2: "YAML & JSON"
+
+Folding Strings
+
+Strings can also be written in blocks and be interpreted without the new line characters using the fold operator (greater than).
+
+message: >
+  kapil Prajapati
+  Mehsana
+  384002
+  Gujarat
+  India
+
+The above YAML snippet is interpreted as in the output below.
+
+message: "kapil Prajapati Mehsana 384002 Gujarat India"
+
+Block strings
+
+Strings can be interpreted as blocks using the block (pipe) character.
+
+message: |
+  kapil Prajapati
+  Mehsana
+  384002
+  Gujarat
+  India
+
+This is interpreted with the new lines (\n) as below.
+
+message: kapil Prajapati
+  Mehsana
+  384002
+  Gujarat
+  India
+
+Chomp characters
+
+Chomp characters are used to remove the new line characters from the end of a scalar string.
+
+message:  >+
+  This block line
+  Will be interpreted as a single
+  line with a newline character at the 
+  end
+
+The above snippet is interpreted as below in JSON
+
+
+{
+  "message": "This block line Will be interpreted as a single line with a newline character at the  end\n"
+}
+
+
+Stripping new line character
+
+message: >-
+ This block line
+ Will be interpreted as a single
+ line without the newline character at the
+ end
+
+
+The above snippet is interpreted as below in JSON.
+
+{
+  "message": "This block line Will be interpreted as a single line without the newline character at the end"
+}
+
+
+5. Comments 
+
+Unlike JSON, the YAML file supports comments, which start with #. To learn more, see – how to add comments in YAML.
+
+# Author : Kapil Prajapati
+Name: Kapil Prajapati
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
