@@ -51,7 +51,6 @@ Resources:
       SecurityGroupIds: 
         - !Ref SecurityGroup
       SubnetId: !Ref SubnetId
-      IamInstanceProfile: !Ref IAMRole
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
           Ebs:
@@ -59,4 +58,4 @@ Resources:
             VolumeType: gp3
       Tags:
         - Key: Name
-          Value: MyEC2Instance
+          Value: MyEC2Instance  
