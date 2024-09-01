@@ -1,0 +1,19 @@
+Resources:
+  MyBucket:
+    Type: 'AWS::S3::Bucket'
+  MyDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+      Properties:
+        DistributionConfiguration:
+          Origins:
+            - DomainName: !GetAtt 
+                - MyBucket
+                - DomainName
+              Id: MyS3Origin
+              S3OriginConfig: {}
+          Enabled: 'true'
+          DefaultCacheBehavior:
+            TargetOrigined: MyS3Origin
+            ForwardedValues:
+              QueryString: 'false'
+            ViewerProtocolPolicy: allow-all

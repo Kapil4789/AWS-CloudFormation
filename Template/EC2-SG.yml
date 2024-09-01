@@ -1,0 +1,28 @@
+Parameters:
+  KeyName:
+    Description: The EC2 Key Pair allow you SSH to access Ec2 instance
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+
+Resources:
+  Ec2Instance:
+    Type:'AWS::EC2::Instance'
+      Properties:
+        SecurityGroups:
+          - !Ref InstanceSecurityGroup
+          - MyexistingSecurityGroup
+        KeyName: Demo-K
+        Imageid: ami-1234567890abcdef0
+        InstanceType: t2.micro
+        KeyName: !Ref KeYName       
+           
+
+  InstanceSecurityGroup:
+    Type:'AWS::EC2::SecurityGroup'
+      Properties:
+        GroupDescription: Enable SSH access via port 22
+          SecurityGroupIngress:
+            - IpProtocol: tcp
+              FromPort: '22'
+              ToPort: '22'
+              !Cidr: 0.0.0.0/0
