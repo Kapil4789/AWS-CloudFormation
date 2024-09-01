@@ -41,4 +41,51 @@ Parameters:
     Description: "Comma delimeter list of three CIDR Block"
     Type: CommaDelimitedList
     Default: "10.0.48.0/24, 10.0.112.0/24, 10.0.176.0/24"
-    
+
+  VPC:
+    Type: String
+    Default: vpc-0e2c3e7d
+  VpcAzs:
+    Type: CommaDelimitedList
+    Default: us-east-2a, us-east-2b, us-east-2c
+  DBSubnetIpBlocks:
+    Type: CommaDelimitedList
+    Default: 172.16.0.0/24, 172.16.1.0/24, 172.16.2.0/24
+  
+  Resources:
+    DbSubnet1:
+      Type: AWS::EC2::Subnet
+      Properties:
+        AvailabilityZone: !Sub
+          - ${AWS::Region}${AZ}
+          - AZ: !Select
+            - 0
+            - !Ref VpcAzs
+        VpcId: !Ref VPC
+        CidrBlock: !Select
+          - 0
+          - !Ref DBSubnetIpBlocks
+    DbSubnet2:
+      Type: AWS::EC2::Subnet
+      Properties:
+        AvailabilityZone: !Sub
+          - ${AWS::Region}${AZ}
+          - AZ: !Select
+            - 1
+            - !Ref VpcAzs
+        VpcId: !Ref VPC
+        CidrBlock: !Select
+          - 1
+          - !Ref DBSubnetIpBlocks
+    DbSubnet3:
+      Type: AWS::EC2::Subnet
+      Properties:
+        AvailabilityZone: !Sub
+          - ${AWS::Region}@{AZ}
+          - AZ: !Select
+            - 2
+            - !Ref VpcAzs
+        VpcId: !Ref VPC
+        CidrBlock: !Select
+          - 2
+          - !Ref DBSubnetIpBlocks
