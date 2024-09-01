@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: A Simple EC2 instance
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Enter Key name
+    Default: Demo-k
+
+  InstanceType:
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t3.micro
+      - t3.small
+    Description: Enter Instance type
+
+  LatestAmiId:
+    Description: The latest Amazon Linux 2 AMI from the Parameter Store
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+    
+  # ImageId:
+  #   Type: AWS::EC2::Image::Id
+  #   Description: Enter ami Id
+  #   Default: ami-0ae8f15ae66fe8cda
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: Enter Vpc Id
+    Default: vpc-0b59960c2fc09f7cd
+    AllowedValues:
+      - vpc-0b59960c2fc09f7cd
+      - vpc-08ced18c894b28aa2
+      - vpc-045a4913e9fee88d1
+      - vpc-0356927f239643c17
+      - vpc-0b59960c2fc09f7cd
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Enter Subnet Id
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Enter Security Group Id
+  IAMRole:
+    Type: String
+    Default: ec2-secret-execution-role
+    Description: Enter IAM Role
+    AllowedValues:
+      - ec2-secret-execution-role
+      - NDS-Cync-Dev-EC2-SSM-Role
+      - ecrecsfullaccess
+      - EC2SSM-Role
+Mappings:
+  RegionMap:
+    us-east-1:
+      instancetype: t3.micro
+    us-west-1:
+      instancetype: t3.small
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !FindInMap
+        - RegionMap
+        - !Ref AWS::Region
+        - instancetype 
+      KeyName: !Ref KeyName
+      SecurityGroupIds: 
+        - !Ref SecurityGroup
+      SubnetId: !Ref SubnetId
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+      Tags:
+        - Key: Name
+          Value: MyEC2Instance  

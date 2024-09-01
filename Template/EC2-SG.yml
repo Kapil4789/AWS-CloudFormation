@@ -1,3 +1,5 @@
+# !Ref Attribute used with list
+
 Parameters:
   KeyName:
     Description: The EC2 Key Pair allow you SSH to access Ec2 instance

@@ -1,0 +1,21 @@
+# Parameter Example
+
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 instance Key Pair to access SSH connection
+
+  Wordpress:
+    Type: String
+    NoEcho: true
+    Default: Admin
+    MinLength: 1
+    MaxLength: 16
+    AllowPattern: "[a-zA-Z][a-zA-Z0-9]*"
+
+  WebServerPort:
+    Default: 8888
+    Type: number
+    MinValue: 1
+    MaxValue: 65535
+    Description: TPC/IP Port for web Server 
