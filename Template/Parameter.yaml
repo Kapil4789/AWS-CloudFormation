@@ -19,3 +19,26 @@ Parameters:
     MinValue: 1
     MaxValue: 65535
     Description: TPC/IP Port for web Server 
+
+  InstanceTypeParameter:
+    Description: Enter t3.micro t3.small t3.medium instance use in this template
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t3.micro
+      - t3.small
+      - t3.medium
+
+  DBPwd:
+    NoEcho: true
+    Description: Enter DB Password
+    Type: String
+    MinLength: 1
+    MaxLength: 41
+    AllowedPattern: ^[a-zA-Z0-9]*$
+
+  DBSubnetIpBlocks:
+    Description: "Comma delimeter list of three CIDR Block"
+    Type: CommaDelimitedList
+    Default: "10.0.48.0/24, 10.0.112.0/24, 10.0.176.0/24"
+    

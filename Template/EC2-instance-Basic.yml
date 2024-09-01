@@ -21,19 +21,19 @@ Metadata:
 
     ParameterLabels:
       VpcId:
-        default: "VPC ID"
+        default: "Enter VPC ID"
       SubnetId:
-        default: "Subnet ID"
+        default: "Enter Subnet ID"
       SecurityGroup:
-        default: "Security Group"
+        default: "Enter Security Group"
       KeyName:
-        default: "Key Pair Name"
+        default: "Enter Key Pair Name"
       InstanceType:
-        default: "Instance Type"
+        default: "Enter Instance Type"
       ImageId:
-        default: "AMI ID"
+        default: "Enter AMI ID"
       IAMRole:
-        default: "IAM Role"
+        default: "Enter IAM Role"
   
 Parameters:
   KeyName:
