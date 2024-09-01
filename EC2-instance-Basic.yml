@@ -59,4 +59,4 @@ Resources:
             VolumeType: gp3
       Tags:
         - Key: Name
-          Value: MyEC2Instance
+          Value: MyEC2Instance  
