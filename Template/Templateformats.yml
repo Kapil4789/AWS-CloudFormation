@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: This is Teamplate Description
+
+Metadata:
+     Template metadata
+
+
+Parameters:
+     Set of Parameters for the template
+
+
+Rules:
+     Set of Rules for the template
+
+Mappings:
+     Set of Mappings for the template
+
+
+Conditions:
+     Set of Conditions for the template
+
+
+Transform:
+     Set of Transform for the template
+
+
+Resources:
+     Set of Resources for the template
+
+
+Outputs:
+     Set of Outputs for the template
+
+
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: This is Teamplate Description
+Resources:
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: 'XXXXXXXXXXXXXXXXXXXXX'
+      InstanceType: t2.micro
+      KeyName: mykey
+      SecurityGroupIds:
+        - sg-0f7e465b
+      SubnetId: XXXXXXXXXXXXXXX
+      Tags:
+        - Key: Name
+          Value: MyEC2Instance
+      Ebs:
+        VolumeSize: 30
+        VolumeType: gp2
+        DeleteOnTermination: true
+        Encrypted: true
+
+
+Parameters:
+  MyParameter:
+    Type: String
+    AllowedPattern: '\d{4}'

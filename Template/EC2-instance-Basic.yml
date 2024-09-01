@@ -1,5 +1,40 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: A Simple EC2 instance
+Description: EC2 instance with basic configuration
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: "Network Configuration"
+        Parameters:
+          - VpcId
+          - SubnetId
+          - SecurityGroup
+      -
+        Label:
+          default: "EC2 Configuration"
+        Parameters:
+          - KeyName
+          - InstanceType
+          - ImageId
+          - IAMRole
+
+    ParameterLabels:
+      VpcId:
+        default: "VPC ID"
+      SubnetId:
+        default: "Subnet ID"
+      SecurityGroup:
+        default: "Security Group"
+      KeyName:
+        default: "Key Pair Name"
+      InstanceType:
+        default: "Instance Type"
+      ImageId:
+        default: "AMI ID"
+      IAMRole:
+        default: "IAM Role"
+  
 Parameters:
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName

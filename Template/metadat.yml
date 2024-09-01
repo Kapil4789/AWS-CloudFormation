@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: 
+Description: Metadata Example
+
+Metadata:
+  AWS::Cloudformation::Interface
+    ParameterGroups:
+      - Label:
+          default: Network Configuration
+        Parameters:
+          - CIDR
+          - Subnet
+          - SecurityGroup
+    ParameterLabels:
+      CIDR:
+        default: CIDR Block
+      Subnet:
+        default: Subnet
+      SecurityGroup:
+        default: Security Group 
+
