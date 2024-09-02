@@ -1,0 +1,30 @@
+Rules:
+  Rules01:
+    RuleCondition:
+      rule-specific instric function: value01
+    Assertions:
+      - Assert:
+          rule-specific instric function: value02
+        AssertDescription: "Infromation  about this assert"
+      - Assert:
+          rule-specific instric function: value03
+        AssertDescription: "Infromation about this assert"
+  
+  Rules02:
+    Assertions:
+      - Assert:
+          rule-specific instric function: value04
+        AssertDescription: "Information about this assert"
+
+
+
+!And
+  - !Equal
+    - !Ref ASecurityGroup
+    - value01
+  - !Equal
+    - !Ref ASecurityGroup
+    - value02
+  
+  - !Contains:
+      - m1.
